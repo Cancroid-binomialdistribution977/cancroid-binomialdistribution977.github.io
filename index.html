@@ -110,8 +110,10 @@
             flex-wrap: wrap;
         }
 
-        .btn {
-            border: none;
+        /* Стили для googleLoginBtn */
+        .googleLoginBtn {
+            background: #1A73E8;
+            color: #fff;
             padding: 10px 24px;
             border-radius: 4px;
             font-size: 14px;
@@ -119,6 +121,16 @@
             cursor: pointer;
             transition: background 0.2s;
             letter-spacing: 0.25px;
+            border: none;
+            display: inline-block;
+            text-align: center;
+            user-select: none;
+        }
+        .googleLoginBtn:hover {
+            background: #1557B0;
+        }
+        .googleLoginBtn:active {
+            background: #10468A;
         }
 
         .btn-secondary {
@@ -179,6 +191,9 @@
                 flex-direction: column;
                 align-items: stretch;
             }
+            .googleLoginBtn {
+                text-align: center;
+            }
             .btn {
                 text-align: center;
             }
@@ -220,6 +235,7 @@
 
     <!-- Кнопки -->
     <div class="actions">
+        <div class="googleLoginBtn">Sign In</div>
         <button class="btn btn-secondary">Paste URL</button>
     </div>
 
