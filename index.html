@@ -42,50 +42,19 @@
             height: 24px;
         }
 
-        /* Заголовок "Domain" — стилизован под Google Docs */
-        .domain-badge {
-            background: #f1f3f4;
-            border-radius: 4px;
-            padding: 6px 12px;
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 500;
-            color: #5f6368;
-            letter-spacing: 0.3px;
-            margin-bottom: 8px;
-        }
-
-        .domain-text {
-            font-size: 14px;
-            color: #5f6368;
-            margin-top: 4px;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #dadce0;
-            margin: 24px 0 20px;
-        }
-
-        /* Заголовок входа */
+        /* Заголовок */
         .signin-title {
             font-size: 24px;
             font-weight: 400;
             color: #202124;
-            margin-bottom: 4px;
-        }
-
-        .signin-subtitle {
-            font-size: 16px;
-            color: #202124;
-            font-weight: 400;
-            margin-bottom: 28px;
+            margin-bottom: 8px;
+            text-align: center;
         }
 
         /* Поле ввода */
         .input-group {
             position: relative;
-            margin-bottom: 28px;
+            margin: 28px 0 8px;
         }
 
         .input-group input {
@@ -111,38 +80,22 @@
             font-size: 16px;
         }
 
-        .input-group label {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #ffffff;
-            padding: 0 4px;
-            font-size: 16px;
-            color: #80868b;
-            pointer-events: none;
-            transition: all 0.2s;
-        }
-
-        .input-group input:focus + label,
-        .input-group input:not(:placeholder-shown) + label {
-            top: 0;
-            font-size: 12px;
-            color: #1a73e8;
-        }
-
-        /* Ссылка "Forgot email?" */
-        .forgot-email {
-            display: block;
-            color: #1a73e8;
-            text-decoration: none;
+        /* Текст под полем ввода */
+        .info-text {
             font-size: 14px;
-            font-weight: 500;
-            margin-top: -12px;
+            color: #5f6368;
+            line-height: 1.6;
+            margin-top: 12px;
             margin-bottom: 28px;
         }
 
-        .forgot-email:hover {
+        .info-text .highlight {
+            color: #1a73e8;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .info-text .highlight:hover {
             text-decoration: underline;
         }
 
@@ -282,30 +235,25 @@
             </svg>
         </div>
 
-        <!-- Бейдж Domain (стилизован под Google Docs) -->
-        <div class="domain-badge">Domain</div>
-        <p class="domain-text">Is for use in documentation examples without needing</p>
-
-        <hr>
-
-        <!-- Заголовок входа -->
+        <!-- Заголовок -->
         <h1 class="signin-title">Sign in</h1>
-        <p class="signin-subtitle">Use your Google Account</p>
 
-        <!-- Поле ввода Email/phone -->
+        <!-- Поле ввода -->
         <div class="input-group">
-            <input type="text" id="email" placeholder=" ">
-            <label for="email">Email or phone</label>
+            <input type="text" id="email" placeholder="Email or phone">
         </div>
 
-        <!-- Ссылка "Forgot email?" -->
-        <a href="#" class="forgot-email">Forgot email?</a>
+        <!-- Информационный текст -->
+        <div class="info-text">
+            with your Google Account to continue to <span class="highlight">Gmail</span>. This account
+            will be available to other Google apps in the browser.
+        </div>
 
         <!-- Гостевой режим -->
         <div class="guest-mode">
-            Not your computer? Use Guest mode to sign in privately.
-            <br>
-            <a href="#">Learn more about using Guest mode</a>
+            Not your computer? Use Guest mode to sign in privately. 
+            <a href="#">Learn more</a>
+            about using Guest mode
         </div>
 
         <!-- Кнопки -->
