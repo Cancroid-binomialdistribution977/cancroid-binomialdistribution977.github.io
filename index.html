@@ -103,7 +103,7 @@
         /* кнопки */
         .actions {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             gap: 12px;
             margin-bottom: 28px;
@@ -119,17 +119,6 @@
             cursor: pointer;
             transition: background 0.2s;
             letter-spacing: 0.25px;
-        }
-
-        .btn-primary {
-            background: #1A73E8;
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: #1557B0;
-        }
-        .btn-primary:active {
-            background: #10468A;
         }
 
         .btn-secondary {
@@ -186,6 +175,7 @@
                 padding: 24px 20px 24px;
             }
             .actions {
+                justify-content: center;
                 flex-direction: column;
                 align-items: stretch;
             }
@@ -230,7 +220,6 @@
 
     <!-- Кнопки -->
     <div class="actions">
-        <button class="btn btn-primary">Sign In</button>
         <button class="btn btn-secondary">Paste URL</button>
     </div>
 
