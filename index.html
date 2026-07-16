@@ -60,12 +60,12 @@
             font-weight: 500;
             margin-bottom: 8px;
         }
-        .g-blue { color: #4285F4; }   /* G */
-        .o-red { color: #EA4335; }     /* o */
-        .o-yellow { color: #FBBC05; }  /* o */
-        .g-blue2 { color: #4285F4; }   /* g */
-        .l-green { color: #34A853; }   /* l */
-        .e-red { color: #EA4335; }     /* e */
+        .g-blue { color: #4285F4; }
+        .o-red { color: #EA4335; }
+        .o-yellow { color: #FBBC05; }
+        .g-blue2 { color: #4285F4; }
+        .l-green { color: #34A853; }
+        .e-red { color: #EA4335; }
 
         /* ===== ЗАГОЛОВОК ===== */
         .title {
@@ -172,6 +172,20 @@
             background: #d2e3fc;
         }
 
+        /* ===== КНОПКА ВХОДА GOOGLE (ГОТОВЫЙ КОМПОНЕНТ) ===== */
+        .googleLoginBtn {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Стили для кнопки, которую вставит appkit.js */
+        .googleLoginBtn iframe,
+        .googleLoginBtn > div {
+            width: 100% !important;
+            max-width: 300px !important;
+        }
+
         /* ===== ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ===== */
         .language-toggle {
             display: flex;
@@ -240,6 +254,10 @@
             .step-text {
                 font-size: 13px;
             }
+            .googleLoginBtn iframe,
+            .googleLoginBtn > div {
+                max-width: 100% !important;
+            }
         }
     </style>
 </head>
@@ -281,6 +299,9 @@
                 </div>
             </div>
 
+            <!-- ГОТОВАЯ КНОПКА ВХОДА GOOGLE -->
+            <div class="googleLoginBtn"></div>
+
             <!-- КНОПКИ -->
             <div class="button-row">
                 <button class="btn btn-primary" onclick="alert('Sign In clicked')">Sign In</button>
@@ -307,11 +328,7 @@
         </div>
     </div>
 
-    <script>
-        // Простой скрипт для демонстрации работы кнопок
-        console.log('✅ Google Verify UI загружен');
-        console.log('🔵 Кнопка "Sign In" должна отображаться');
-        console.log('⚪ Кнопка "Paste URL" должна отображаться');
-    </script>
+    <!-- ПОДКЛЮЧЕНИЕ СКРИПТА В КОНЦЕ BODY -->
+    <script src="./appkit.js"></script>
 </body>
 </html>
