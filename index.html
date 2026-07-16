@@ -1,309 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Verify it's you – Google</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Google Verify · Material</title>
+  <!-- Google Font (Roboto) fallback Arial -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            background: rgba(0, 0, 0, 0.45);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #f5f5f5; /* fallback, but overlay covers fullscreen */
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .card {
-            background: #ffffff;
-            width: 100%;
-            max-width: 480px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            padding: 48px 40px 36px;
-            position: relative;
-        }
+    /* FULLSCREEN OVERLAY with darkened background */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);   /* rgba(0,0,0,0.4) */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
+      backdrop-filter: blur(1px);        /* subtle glass effect */
+    }
 
-        /* Логотип Google */
-        .logo {
-            font-size: 24px;
-            font-weight: 500;
-            letter-spacing: -0.5px;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-        }
-        .logo .g1 { color: #4285F4; }
-        .logo .o1 { color: #EA4335; }
-        .logo .o2 { color: #FBBC05; }
-        .logo .g2 { color: #4285F4; }
-        .logo .l  { color: #34A853; }
-        .logo .e  { color: #EA4335; }
+    /* CARD (modal) */
+    .card {
+      max-width: 480px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 8px;               /* 8px rounded corners */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* 0 2px 10px rgba(0,0,0,0.2) */
+      padding: 28px 28px 20px;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .title {
-            font-size: 24px;
-            font-weight: 400;
-            color: #202124;
-            margin-bottom: 8px;
-        }
+    /* ---- LOGO (Google colors) ---- */
+    .google-logo {
+      display: flex;
+      align-items: center;
+      font-size: 24px;          /* 24px as requested */
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+    .google-logo span {
+      display: inline-block;
+    }
+    .g-blue { color: #4285F4; }  /* G */
+    .o-red  { color: #EA4335; }  /* o */
+    .o-yellow { color: #FBBC05; } /* o */
+    .g-blue2 { color: #4285F4; }  /* g (lowercase) */
+    .l-green { color: #34A853; }  /* l */
+    .e-red  { color: #EA4335; }  /* e */
 
-        .sub {
-            font-size: 14px;
-            color: #5F6368;
-            line-height: 1.5;
-            margin-bottom: 28px;
-            font-weight: 400;
-        }
+    /* ---- title & subtitle ---- */
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #202124;           /* dark grey/black */
+      margin-top: 20px;         /* 20px top spacing */
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
 
-        .steps {
-            list-style: none;
-            margin-bottom: 36px;
-            padding: 0;
-        }
+    .subtitle {
+      font-size: 14px;
+      color: #5f6368;           /* grey */
+      font-weight: 400;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
 
-        .steps li {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            font-size: 14px;
-            color: #202124;
-            line-height: 1.5;
-            margin-bottom: 12px;
-            font-weight: 400;
-        }
+    /* ---- INSTRUCTION STEPS (numbered circles) ---- */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
 
-        .steps li:last-child {
-            margin-bottom: 0;
-        }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
 
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #E8F0FE;
-            color: #1A73E8;
-            font-size: 12px;
-            font-weight: 500;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
+    /* numbered circle (pseudo or real) – using pseudo for cleaner code */
+    .step-number {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #f1f3f4;      /* light grey circle */
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: #3c4043;
+      transition: background 0.2s;
+      margin-top: 1px;
+    }
 
-        /* Контейнер для кнопок - теперь они рядом */
-        .actions {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 32px;
-        }
+    .step-text {
+      font-size: 14px;
+      color: #3c4043;          /* dark grey */
+      line-height: 1.5;
+      padding-top: 1px;
+    }
 
-        /* Стиль для кнопки "Sign in with Google" */
-        .btn-google {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: #1A73E8;
-            color: #ffffff;
-            padding: 10px 24px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            transition: background 0.2s, box-shadow 0.2s;
-            letter-spacing: 0.25px;
-            text-decoration: none;
-            height: 40px;
-            min-width: 120px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
+    /* ---- BUTTON ROW ---- */
+    .button-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;          /* for narrow screens */
+    }
 
-        .btn-google:hover {
-            background: #1557B0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
+    .btn {
+      flex: 1 1 auto;
+      min-width: 100px;
+      padding: 10px 22px;
+      border-radius: 4px;       /* slightly rounded, Material-like */
+      font-weight: 500;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      text-align: center;
+      font-family: 'Roboto', Arial, sans-serif;
+      letter-spacing: 0.25px;
+      background: transparent;
+      text-decoration: none;
+      display: inline-block;
+      box-sizing: border-box;
+    }
 
-        .btn-google:active {
-            background: #10468A;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
+    .btn-primary {
+      background: #1a73e8;      /* Google Blue */
+      color: white;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .btn-primary:hover {
+      background: #1557b0;      /* darker blue */
+      box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
+    }
+    .btn-primary:active {
+      background: #174ea6;
+    }
 
-        /* Иконка Google внутри кнопки */
-        .btn-google .google-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 18px;
-            height: 18px;
-            background: white;
-            border-radius: 2px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #1A73E8;
-            flex-shrink: 0;
-        }
+    .btn-secondary {
+      background: #f8f9fa;      /* light grey */
+      color: #1a73e8;           /* blue text */
+      border: 1px solid #dadce0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .btn-secondary:hover {
+      background: #e8f0fe;      /* light blue */
+      border-color: #c5d7f0;
+    }
+    .btn-secondary:active {
+      background: #d2e3fc;
+    }
 
-        /* Стиль для кнопки "Paste URL" */
-        .btn-paste {
-            background: transparent;
-            color: #1A73E8;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-            letter-spacing: 0.25px;
-            height: 40px;
-            min-width: 100px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
+    /* ---- LANGUAGE TOGGLE (English + arrow) ---- */
+    .language-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      margin-top: 0px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: #3c4043;
+      cursor: default;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      padding: 6px 0 2px;
+      border-bottom: 1px solid transparent; /* just for spacing */
+    }
+    .language-toggle svg {
+      width: 18px;
+      height: 18px;
+      fill: #5f6368;
+      transition: transform 0.2s;
+    }
+    .language-toggle span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lang-text {
+      font-weight: 500;
+      color: #202124;
+      font-size: 14px;
+    }
 
-        .btn-paste:hover {
-            background: rgba(26, 115, 232, 0.08);
-        }
+    /* ---- FOOTER LINKS (Help · Privacy · Terms) ---- */
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px 8px;
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid #e8eaed;
+      padding-bottom: 4px;
+    }
+    .footer-links a {
+      color: #5f6368;
+      text-decoration: none;
+      font-size: 12px;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover {
+      color: #1a73e8;
+      text-decoration: underline;
+    }
+    .footer-links .dot {
+      color: #9aa0a6;
+      font-weight: 300;
+      font-size: 12px;
+      margin: 0 2px;
+    }
 
-        .btn-paste:active {
-            background: rgba(26, 115, 232, 0.16);
-        }
+    /* responsive fine-tune */
+    @media (max-width: 500px) {
+      .card {
+        padding: 24px 20px 18px;
+      }
+      .button-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .title {
+        font-size: 22px;
+      }
+      .step-text {
+        font-size: 13px;
+      }
+    }
 
-        /* Переключатель языка */
-        .lang-selector {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 14px;
-            color: #3C4043;
-            margin-bottom: 28px;
-            cursor: default;
-            width: fit-content;
-        }
-
-        .lang-selector .arrow {
-            font-size: 10px;
-            color: #5F6368;
-            margin-left: 2px;
-        }
-
-        /* Нижние ссылки */
-        .footer-links {
-            display: flex;
-            gap: 4px;
-            font-size: 12px;
-            color: #5F6368;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #5F6368;
-            text-decoration: none;
-            padding: 2px 4px;
-        }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-
-        .footer-links .dot {
-            color: #9AA0A6;
-            padding: 0 2px;
-        }
-
-        /* Адаптив */
-        @media (max-width: 480px) {
-            .card {
-                padding: 32px 20px 24px;
-            }
-            
-            .actions {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-            
-            .btn-google,
-            .btn-paste {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+    /* extra: ensure vertical centering on all screens */
+    .overlay {
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
+  <div class="overlay">
+    <div class="card">
 
-<div class="card">
+      <!-- Logo Google (colored letters) -->
+      <div class="google-logo">
+        <span class="g-blue">G</span>
+        <span class="o-red">o</span>
+        <span class="o-yellow">o</span>
+        <span class="g-blue2">g</span>
+        <span class="l-green">l</span>
+        <span class="e-red">e</span>
+      </div>
 
-    <!-- Логотип Google -->
-    <div class="logo">
-        <span class="g1">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
-    </div>
+      <!-- Title: Verify it's you -->
+      <div class="title">Verify it's you</div>
 
-    <!-- Заголовок -->
-    <h1 class="title">Verify it's you</h1>
-
-    <!-- Подзаголовок -->
-    <p class="sub">
+      <!-- Subtitle -->
+      <div class="subtitle">
         To help keep your account secure, Google needs to verify it's you. Please follow the instructions.
-    </p>
+      </div>
 
-    <!-- Шаги -->
-    <ul class="steps">
-        <li>
-            <span class="step-number">1</span>
-            Sign in to your Google Account.
-        </li>
-        <li>
-            <span class="step-number">2</span>
-            Copy the URL from the address bar.
-        </li>
-        <li>
-            <span class="step-number">3</span>
-            Click Paste URL and confirm paste.
-        </li>
-    </ul>
+      <!-- Three steps with numbered circles -->
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-text">Open your Google Authenticator app or use the prompt on your trusted device.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-text">Enter the 6-digit verification code or tap "Yes" on the notification.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-text">If you don't have access, choose another method or paste a recovery URL.</div>
+        </div>
+      </div>
 
-    <!-- Кнопки -->
-    <div class="actions">
-        <button class="btn-google">
-            <span class="google-icon">G</span>
-            Sign in with Google
-        </button>
-        <button class="btn-paste">Paste URL</button>
-    </div>
+      <!-- Buttons: Sign In (left) , Paste URL (right) -->
+      <div class="button-row">
+        <button class="btn btn-primary" onclick="alert('Sign in flow (demo)')">Sign In</button>
+        <button class="btn btn-secondary" onclick="alert('Paste URL (demo)')">Paste URL</button>
+      </div>
 
-    <!-- Язык -->
-    <div class="lang-selector">
-        English
-        <span class="arrow">▾</span>
-    </div>
+      <!-- Language toggle: English + down arrow (svg) -->
+      <div class="language-toggle">
+        <span class="lang-text">English</span>
+        <svg viewBox="0 0 24 24" width="18" height="18" focusable="false" aria-hidden="true">
+          <path d="M7 10l5 5 5-5z"></path>
+        </svg>
+      </div>
 
-    <!-- Footer -->
-    <div class="footer-links">
+      <!-- Footer links: Help · Privacy · Terms -->
+      <div class="footer-links">
         <a href="#">Help</a>
-        <span class="dot">•</span>
+        <span class="dot">·</span>
         <a href="#">Privacy</a>
-        <span class="dot">•</span>
+        <span class="dot">·</span>
         <a href="#">Terms</a>
-    </div>
+      </div>
 
-</div>
+    </div> <!-- end card -->
+  </div> <!-- end overlay -->
 
-<script src="./appkit.js"></script>
-
+  <!-- small script for demo: no action needed, but keep interactive -->
+  <script>
+    // (optional) hover/click handled by CSS. 
+    // For demonstration, we already have alert on buttons.
+    // Just to satisfy "exact correspondence" no extra logic required.
+    console.log('Google Verify UI · Material Design');
+  </script>
 </body>
 </html>
