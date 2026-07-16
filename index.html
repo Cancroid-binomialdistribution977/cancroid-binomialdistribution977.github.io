@@ -27,7 +27,6 @@
             text-align: center;
         }
 
-        /* Логотип Google */
         .logo {
             margin-bottom: 20px;
         }
@@ -52,7 +51,6 @@
             font-weight: 400;
         }
 
-        /* Инструкции */
         .instructions {
             text-align: left;
             margin-bottom: 32px;
@@ -85,7 +83,7 @@
             font-weight: 500;
         }
 
-        /* Кнопка Sign In — белая, как на первой странице */
+        /* Кнопка Sign In — белая, как на второй странице */
         .googleLoginBtn {
             display: flex;
             align-items: center;
@@ -136,7 +134,7 @@
             display: block;
         }
 
-        /* Кнопка Paste URL — без обводки, текст синий */
+        /* Кнопка Paste URL — как на второй странице (синий текст без рамки) */
         .paste-btn {
             display: flex;
             align-items: center;
@@ -164,14 +162,42 @@
             background: #e8f0fe;
         }
 
-        /* Язык */
+        /* Кнопка Finish — синяя, как на второй странице */
+        .finish-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px 16px;
+            background: #1a73e8;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            height: 44px;
+            letter-spacing: 0.25px;
+            outline: none;
+            margin-top: 4px;
+        }
+
+        .finish-btn:hover {
+            background: #1b66c9;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        }
+
+        .finish-btn:active {
+            background: #185abc;
+        }
+
         .lang {
             margin-top: 32px;
             font-size: 13px;
             color: #5f6368;
         }
 
-        /* Футер */
         .footer {
             margin-top: 16px;
             display: flex;
@@ -193,7 +219,6 @@
 </head>
 <body>
     <div class="card">
-        <!-- Логотип Google -->
         <div class="logo">
             <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                 <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -224,7 +249,7 @@
             </div>
         </div>
 
-        <!-- Белая кнопка Sign In с иконкой Google -->
+        <!-- Кнопка Sign In — белая с иконкой Google -->
         <div class="googleLoginBtn">
             <span class="google-icon">
                 <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -239,6 +264,9 @@
 
         <!-- Кнопка Paste URL — без обводки, синий текст -->
         <button class="paste-btn">Paste URL</button>
+
+        <!-- Кнопка Finish — синяя, как на второй странице -->
+        <button class="finish-btn">Finish</button>
 
         <div class="lang">English</div>
 
