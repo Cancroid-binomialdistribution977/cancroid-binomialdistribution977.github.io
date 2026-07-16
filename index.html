@@ -41,12 +41,12 @@
             display: flex;
             align-items: center;
         }
-        .logo .g1 { color: #4285F4; } /* синяя G */
-        .logo .o1 { color: #EA4335; } /* красная o */
-        .logo .o2 { color: #FBBC05; } /* жёлтая o */
-        .logo .g2 { color: #4285F4; } /* синяя g */
-        .logo .l  { color: #34A853; } /* зелёная l */
-        .logo .e  { color: #EA4335; } /* красная e */
+        .logo .g1 { color: #4285F4; }
+        .logo .o1 { color: #EA4335; }
+        .logo .o2 { color: #FBBC05; }
+        .logo .g2 { color: #4285F4; }
+        .logo .l  { color: #34A853; }
+        .logo .e  { color: #EA4335; }
 
         /* заголовок */
         .title {
@@ -104,16 +104,13 @@
         .actions {
             display: flex;
             justify-content: flex-end;
-            align-items: center;
-            gap: 12px;
             margin-bottom: 28px;
-            flex-wrap: wrap;
         }
 
-        /* Стили для googleLoginBtn */
-        .googleLoginBtn {
-            background: #1A73E8;
-            color: #fff;
+        .btn-secondary {
+            background: transparent;
+            color: #1A73E8;
+            border: none;
             padding: 10px 24px;
             border-radius: 4px;
             font-size: 14px;
@@ -121,21 +118,6 @@
             cursor: pointer;
             transition: background 0.2s;
             letter-spacing: 0.25px;
-            border: none;
-            display: inline-block;
-            text-align: center;
-            user-select: none;
-        }
-        .googleLoginBtn:hover {
-            background: #1557B0;
-        }
-        .googleLoginBtn:active {
-            background: #10468A;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #1A73E8;
         }
         .btn-secondary:hover {
             background: rgba(26, 115, 232, 0.08);
@@ -188,13 +170,9 @@
             }
             .actions {
                 justify-content: center;
-                flex-direction: column;
-                align-items: stretch;
             }
-            .googleLoginBtn {
-                text-align: center;
-            }
-            .btn {
+            .btn-secondary {
+                width: 100%;
                 text-align: center;
             }
         }
@@ -233,10 +211,9 @@
         </li>
     </ul>
 
-    <!-- Кнопки -->
+    <!-- Кнопка -->
     <div class="actions">
-        <div class="googleLoginBtn">Sign In</div>
-        <button class="btn btn-secondary">Paste URL</button>
+        <button class="btn-secondary">Paste URL</button>
     </div>
 
     <!-- Язык -->
